@@ -1,0 +1,233 @@
+<!DOCTYPE html>
+<html lang="hu">
+<head>
+  <meta charset="UTF-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+  <title>Ravbey Bio</title>
+  <style>
+    * {
+      box-sizing: border-box;
+    }
+
+    body {
+      margin: 0;
+      padding: 1rem;
+      font-family: "Segoe UI", sans-serif;
+      background-color: #f0f2f5;
+      color: #333;
+      display: flex;
+      justify-content: center;
+      align-items: center;
+      min-height: 100vh;
+      flex-direction: column;
+      transition: background-color 0.3s, color 0.3s;
+    }
+
+    .dark-mode {
+      background-color: #18191a;
+      color: #eee;
+    }
+
+    .profile-card {
+      background: white;
+      padding: 2rem;
+      border-radius: 20px;
+      box-shadow: 0 10px 25px rgba(0, 0, 0, 0.1);
+      text-align: center;
+      width: 100%;
+      max-width: 360px;
+      transition: background 0.3s;
+    }
+
+    .dark-mode .profile-card {
+      background: #242526;
+    }
+
+    .profile-image {
+      width: 120px;
+      height: 120px;
+      border-radius: 50%;
+      object-fit: cover;
+      margin-bottom: 1rem;
+    }
+
+    .name {
+      font-size: 1.6rem;
+      font-weight: bold;
+    }
+
+    .username {
+      color: #888;
+      font-size: 0.9rem;
+      margin-bottom: 1rem;
+    }
+
+    .bio {
+      font-size: 0.95rem;
+      margin-bottom: 1.5rem;
+    }
+
+    .social-links {
+      display: flex;
+      flex-direction: column;
+      gap: 0.6rem;
+    }
+
+    .social-links a {
+      display: flex;
+      align-items: center;
+      justify-content: center;
+      gap: 8px;
+      background-color: #4267B2;
+      color: white;
+      padding: 12px;
+      border-radius: 12px;
+      text-decoration: none;
+      font-weight: 500;
+      transition: background 0.2s;
+    }
+
+    .social-links a img {
+      width: 20px;
+      height: 20px;
+    }
+
+    .social-links a:nth-child(1) {
+      background-color: #e1306c;
+    }
+
+    .social-links a:nth-child(2) {
+      background-color: #5865f2;
+    }
+
+    .social-links a:nth-child(3) {
+      background-color: #000;
+    }
+
+    .social-links a:hover {
+      opacity: 0.9;
+    }
+
+    .theme-toggle {
+      position: fixed;
+      top: 15px;
+      right: 15px;
+      background: none;
+      border: none;
+      font-size: 1.8rem;
+      cursor: pointer;
+      color: inherit;
+      z-index: 100;
+    }
+
+    .heart-button {
+      position: fixed;
+      bottom: 20px;
+      left: 20px;
+      background-color: #e0245e;
+      border: none;
+      color: white;
+      font-size: 1.5rem;
+      padding: 12px 16px;
+      border-radius: 50%;
+      cursor: pointer;
+      box-shadow: 0 4px 10px rgba(0, 0, 0, 0.3);
+      transition: transform 0.2s ease;
+      z-index: 100;
+    }
+
+    .heart-button:hover {
+      transform: scale(1.1);
+    }
+
+    .heart-button:active {
+      transform: scale(0.95);
+    }
+
+    @media (max-width: 480px) {
+      .profile-card {
+        padding: 1.5rem;
+      }
+
+      .social-links a {
+        font-size: 0.95rem;
+        padding: 10px;
+      }
+
+      .theme-toggle, .heart-button {
+        font-size: 1.4rem;
+        padding: 10px;
+      }
+
+      .bio {
+        font-size: 0.9rem;
+      }
+    }
+  </style>
+</head>
+<body>
+  <button class="theme-toggle" onclick="toggleTheme()">🌙</button>
+
+  <div class="profile-card">
+    <img src="pfp.png" alt="Profilkép" class="profile-image" />
+    <div class="name">andras.hm</div>
+    <div class="username">@andras.hm</div>
+    <div class="bio">
+      Minecraft szerverfejlesztő, kreatív megoldások és közösségi élmények.<br />
+      Snight alapító 🚀
+    </div>
+
+    <div class="social-links">
+      <a href="https://instagram.com/andras.hm" target="_blank">
+        <img src="https://cdn-icons-png.flaticon.com/512/174/174855.png" alt="Instagram" />
+        Instagram
+      </a>
+      <a href="https://discord.gg/eNnQjRmfbX" target="_blank">
+        <img src="https://cdn-icons-png.flaticon.com/512/2111/2111370.png" alt="Discord" />
+        Discord
+      </a>
+      <a href="https://tiktok.com/@andrasvb" target="_blank">
+        <img src="https://cdn-icons-png.flaticon.com/512/3046/3046121.png" alt="TikTok" />
+        TikTok
+      </a>
+    </div>
+  </div>
+
+  <button class="heart-button" onclick="sendHeart()">❤️</button>
+
+  <script>
+    function toggleTheme() {
+      document.body.classList.toggle("dark-mode");
+      const btn = document.querySelector(".theme-toggle");
+      btn.textContent = document.body.classList.contains("dark-mode") ? "☀️" : "🌙";
+    }
+
+    function sendHeart() {
+      const webhookUrl = "https://discord.com/api/webhooks/1374729095065374771/hfJWG21pGnzLgR1h8_9sNDSwWVcoDlSPo_3v_S1_2jI1Misnlss7qlcnhGPl8FkcjkEw"; // Cseréld ki a sajátodra
+
+      fetch(webhookUrl, {
+        method: "POST",
+        headers: {
+          "Content-Type": "application/json"
+        },
+        body: JSON.stringify({
+          username: "❤️ Bio Szív",
+          avatar_url: "https://cdn-icons-png.flaticon.com/512/833/833472.png",
+          content: "💖 Valaki megszívezte a weboldalt!"
+        })
+      })
+      .then(res => {
+        if (res.ok) {
+          alert("Köszönjük a szívet! 💖");
+        } else {
+          alert("Hiba történt a küldéskor.");
+        }
+      })
+      .catch(err => {
+        console.error("Hiba:", err);
+        alert("Nem sikerült elküldeni a szívet.");
+      });
+    }
+  </script>
+</body>
+</html>
